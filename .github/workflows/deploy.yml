@@ -20,6 +20,16 @@ jobs:
       - name: Install Gumroad CLI
         run: |
           curl -fsSL https://gumroad.com | bash
+      - name: Authenticate and Upload Product Asset
+        env:
+          GUMROAD_ACCESS_TOKEN: ${{ secrets.GUMROAD_ACCESS_TOKEN }}
+        run: |
+          # 1. Authorize the CLI runner session 
+          echo "${{ secrets.GUMROAD_ACCESS_TOKEN }}" | $HOME/.gumroad/bin/gumroad auth login --with-token
+          
+          # 2. Upload your build artifact directly to an existing product draft
+          # Replace 'abc123_prod_id' with your actual Gumroad product ID
+          $HOME/.gumroad/bin/gumroad files upload ./your-product-file.zip --product abc123_prod_id --json --no-input
           echo "$HOME/.gumroad/bin" >> $GITHUB_PATH
 
       - name: Authenticate and Run Deployment
