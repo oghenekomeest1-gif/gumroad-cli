@@ -1,9 +1,13 @@
-name: Run Gumroad Integration
+
+ame: Run Gumroad Integration
 on: [push]
 
 jobs:
   build-and-run:
     runs-on: ubuntu-latest
+    # Placing the env here makes it accessible everywhere inside the runner
+    env:
+      GUMROAD_ACCESS_TOKEN: ${{ secrets.GUMROAD_ACCESS_TOKEN }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -14,9 +18,13 @@ jobs:
           go-version: '1.22'
 
       - name: Run Profile Check
-        env:
-          GUMROAD_ACCESS_TOKEN: ${{ secrets.GUMROAD_ACCESS_TOKEN }}
         run: |
           go build -o gumroad ./cmd/gumroad
           ./gumroad user
+
+
+
+
+
+
 
