@@ -1,17 +1,9 @@
-      - name: Install Gumroad CLI
-        run: |
-          curl -fsSL https://gumroad.com | bash
-          echo "$HOME/.gumroad/bin" >> $GITHUB_PATH
 name: Deploy to Gumroad
 
 on:
   push:
     branches:
       - main
-
-# 1. Define the environment variable globally here
-env:
-  GUMROAD_ACCESS_TOKEN: ${{ secrets.GUMROAD_ACCESS_TOKEN }}
 
 jobs:
   deploy:
@@ -27,15 +19,13 @@ jobs:
 
       - name: Install Gumroad CLI
         run: |
-          curl -sSL https://githubusercontent.com | sh
+          curl -fsSL https://gumroad.com | bash
           echo "$HOME/.gumroad/bin" >> $GITHUB_PATH
 
-      # 2. Every command below will now automatically inherit GUMROAD_ACCESS_TOKEN
-       Sir, replace this step with your exact deployment command
-      - name: Run Deployment
+      - name: Authenticate and Run Deployment
+        env:
+          GUMROAD_ACCESS_TOKEN: ${{ secrets.GUMROAD_ACCESS_TOKEN }}
         run: |
-          gumroad user page publish ./landing.html --json --no-interactive
-
-
-
+          echo "${{ secrets.GUMROAD_ACCESS_TOKEN }}" | gumroad auth login --with-token
+          gumroad user page publish ./landing.html --json
 
