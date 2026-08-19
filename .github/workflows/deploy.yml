@@ -1,3 +1,7 @@
+      - name: Install Gumroad CLI
+        run: |
+          curl -fsSL https://gumroad.com | bash
+          echo "$HOME/.gumroad/bin" >> $GITHUB_PATH
 name: Deploy to Gumroad
 
 on:
