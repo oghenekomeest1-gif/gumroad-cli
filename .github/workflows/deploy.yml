@@ -19,12 +19,14 @@ jobs:
 
       - name: Install Gumroad CLI
         run: |
-          curl -sSL https://githubusercontent.com | sh
+          curl -fsSL https://gumroad.com | bash
           echo "$HOME/.gumroad/bin" >> $GITHUB_PATH
 
       - name: Authenticate and Run Deployment
         env:
           GUMROAD_ACCESS_TOKEN: ${{ secrets.GUMROAD_ACCESS_TOKEN }}
         run: |
-          echo "${{ secrets.GUMROAD_ACCESS_TOKEN }}" | gumroad auth login --with-token
-          gumroad user page publish ./landing.html --json --no-interactive
+          # Use absolute path to bypass environment lookup issues
+          echo "${{ secrets.GUMROAD_ACCESS_TOKEN }}" | $HOME/.gumroad/bin/gumroad auth login --with-token
+          $HOME/.gumroad/bin/gumroad user page publish ./landing.html --json
+
