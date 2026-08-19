@@ -1,29 +1,36 @@
+name: Deploy to Gumroad
 
-ame: Run Gumroad Integration
-on: [push]
+on:
+  push:
+    branches:
+      - main
+
+# 1. Define the environment variable globally here
+env:
+  GUMROAD_ACCESS_TOKEN: ${{ secrets.GUMROAD_ACCESS_TOKEN }}
 
 jobs:
-  build-and-run:
+  deploy:
     runs-on: ubuntu-latest
-    # Placing the env here makes it accessible everywhere inside the runner
-    env:
-      GUMROAD_ACCESS_TOKEN: ${{ secrets.GUMROAD_ACCESS_TOKEN }}
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Go Environment
+      - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.22'
+          go-version: '1.21'
 
-      - name: Run Profile Check
+      - name: Install Gumroad CLI
         run: |
-          go build -o gumroad ./cmd/gumroad
-          ./gumroad user
+          curl -sSL https://githubusercontent.com | sh
+          echo "$HOME/.gumroad/bin" >> $GITHUB_PATH
 
-
-
+      # 2. Every command below will now automatically inherit GUMROAD_ACCESS_TOKEN
+       Sir, replace this step with your exact deployment command
+      - name: Run Deployment
+        run: |
+          gumroad user page publish ./landing.html --json --no-interactive
 
 
 
