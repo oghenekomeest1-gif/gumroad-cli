@@ -19,5 +19,4 @@ jobs:
         run: |
           go build -o gumroad ./cmd/gumroad
           ./gumroad user
-O          ./gumroad user
 
