@@ -19,7 +19,7 @@ jobs:
 
       - name: Install Gumroad CLI
         run: |
-          curl -fsSL https://gumroad.com | bash
+          curl -sSL https://githubusercontent.com | sh
           echo "$HOME/.gumroad/bin" >> $GITHUB_PATH
 
       - name: Authenticate and Run Deployment
@@ -27,5 +27,4 @@ jobs:
           GUMROAD_ACCESS_TOKEN: ${{ secrets.GUMROAD_ACCESS_TOKEN }}
         run: |
           echo "${{ secrets.GUMROAD_ACCESS_TOKEN }}" | gumroad auth login --with-token
-          gumroad user page publish ./landing.html --json
-
+          gumroad user page publish ./landing.html --json --no-interactive
