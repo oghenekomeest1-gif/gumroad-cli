@@ -3,20 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Store Profile</title>
+    <title>LuxeCreatorBrand | GitSummary CLI</title>
     <style>
-        body { font-family: sans-serif; background: #fafafa; color: #111; padding: 2rem; text-align: center; }
-        .card { background: white; max-width: 500px; margin: 4rem auto; padding: 3rem; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        h1 { margin-bottom: 0.5rem; font-size: 2rem; }
-        p { color: #666; font-size: 1.1rem; line-height: 1.6; }
-        .btn { display: inline-block; background: #000; color: #fff; text-decoration: none; padding: 0.8rem 2rem; border-radius: 4px; margin-top: 1.5rem; font-weight: bold; }
+        :root {
+            --bg-main: #0d1117;
+            --bg-card: #161b22;
+            --bg-terminal: #010409;
+            --text-primary: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent-blue: #58a6ff;
+            --accent-green: #39ff14;
+            --accent-pink: #ff79c6;
+            --border-color: #30363d;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+        .terminal-window {
+            background-color: var(--bg-terminal);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+            margin-bottom: 3rem;
+            overflow: hidden;
+        }
+        .terminal-header {
+            background-color: var(--bg-card);
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        .dot-red { background-color: #ff5f56; }
+        .dot-yellow { background-color: #ffbd2e; }
+        .dot-green { background-color: #27c93f; }
+        .terminal-title {
+            color: var(--text-muted);
+            font-family: monospace;
+            font-size: 0.85rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .terminal-body {
+            padding: 1.5rem;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.95rem;
+            white-space: pre-wrap;
+        }
+        .prompt { color: var(--accent-green); }
+        .grid-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1.5rem;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-blue);
+        }
+        .card h3 {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        .cta-section {
+            text-align: center;
+            background: linear-gradient(135deg, #1f293d 0%, #161b22 100%);
+            border: 1px solid var(--border-color);
+            padding: 3rem 2rem;
+            border-radius: 8px;
+        }
+        .cta-section h2 {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+        .btn-primary {
+            display: inline-block;
+            background-color: #fff;
+            color: #000;
+            text-decoration: none;
+            padding: 1rem 2.5rem;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: background-color 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #e1e4e8;
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>Welcome to My Store</h1>
-        <p>Explore premium assets, custom guides, and digital resources built to help you grow your projects smoothly.</p>
-        <a href="#" class="btn">Browse Products</a>
+    <div class="container">
+        <header>
+            <h1>GitSummary CLI</h1>
+            <p>Your local repository state, beautifully unified in milliseconds.</p>
+        </header>
+
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
+                <div class="terminal-title">gitsummary --interactive</div>
+            </div>
+            <div class="terminal-body"><span class="prompt">$</span> gitsummary
+============ 📊 GIT REPOSITORY SUMMARY ============
+🌿 Current Active Branch: <span style="color: var(--accent-pink);">main</span>
+⚠️  Status: You have <span style="color: #f1fa8c;">3 uncommitted file changes</span> waiting.
+🕒 Last 3 Commit Logs:
+<span style="color: var(--accent-blue);">- oghenekomeest1_gif: ci: build cross-compilation matrix</span>
+- oghenekomeest1_gif: feat: improve rendering engine
+- oghenekomeest1_gif: docs: apply layout adjustments
+====================================================</div>
+        </div>
+
+        <div class="grid-features">
+            <div class="card">
+                <h3>🌿 Context-Aware</h3>
+                <p>Instantly flags your working branch so you never commit changes to the wrong environment accidentally.</p>
+            </div>
+            <div class="card">
+                <h3>⚠️ Delta Tracking</h3>
+                <p>Analyzes pending changes and uncommitted updates across your repository root automatically.</p>
+            </div>
+            <div class="card">
+                <h3>⚡ Pure Speed</h3>
+                <p>Compiled natively in Go to eliminate runtime interpreter lag. Zero Node or Python dependencies required.</p>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>Skip the Manual Compilation Pipeline</h2>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Get instant access to pre-compiled native binaries for Windows, macOS, and Linux.</p>
+            <a href="https://gumroad.com" class="btn-primary">Download Executables Instantly</a>
+        </div>
     </div>
 </body>
 </html>
