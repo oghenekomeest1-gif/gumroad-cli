@@ -9,25 +9,36 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      # 1. Upgraded from v4 to v5
       - name: Checkout code
         uses: actions/checkout@v5
 
-      # 2. Upgraded from v5 to v6
       - name: Set up Go
         uses: actions/setup-go@v6
         with:
           go-version: '1.21'
+
+      # 1. THE BUILD: Compile your Go code into a production binary
+      - name: Build Application Binary
+        run: |
+          go build -v -o my-app-executable main.go
+
+      # 2. THE PACKAGING: Compress the executable into a clean distribution .zip folder
+      - name: Package Asset Into Zip
+        run: |
+          zip product-package.zip my-app-executable
 
       - name: Install Gumroad CLI
         run: |
           curl -fsSL https://gumroad.com | bash
           echo "$HOME/.gumroad/bin" >> $GITHUB_PATH
 
-      - name: Authenticate and Run Deployment
+      # 3. THE LIVE DEPLOYMENT: Authenticate and upload the created .zip folder
+      - name: Authenticate and Upload Product Asset
         env:
           GUMROAD_ACCESS_TOKEN: ${{ secrets.GUMROAD_ACCESS_TOKEN }}
         run: |
           echo "${{ secrets.GUMROAD_ACCESS_TOKEN }}" | $HOME/.gumroad/bin/gumroad auth login --with-token
-          $HOME/.gumroad/bin/gumroad user page publish ./landing.html --json
+          
+          # Replace 'abc123_prod_id' with your actual Gumroad product ID or link name
+          $HOME/.gumroad/bin/gumroad files upload ./product-package.zip --product "abc123_prod_id" --json
 
