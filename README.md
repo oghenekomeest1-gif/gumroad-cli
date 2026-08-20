@@ -1,4 +1,10 @@
-# <img src="assets/gumroad-badge.svg" height="28" alt="Gumroad"> Gumroad CLI
+# GitSummary CLI Ultimate Developer Tool
+
+[![Get GitSummary on Gumroad](https://shields.io)](https://luxecreatorbrand.gumroad.com)
+https://luxecreatorbrand.gumroad.com# GitSummary CLI Ultimate Developer Tool
+
+[![Get GitSummary on Gumroad](https://shields.io)](https://luxecreatorbrand.gumroad.com)
+luxecreatorbrand.gumroad.com/l/ektshq# <img src="assets/gumroad-badge.svg" height="28" alt="Gumroad"> Gumroad CLI
 
 CLI for the [Gumroad API](https://app.gumroad.com/api). Designed for humans and AI agents alike.
 
