@@ -33,12 +33,11 @@ jobs:
           echo "$HOME/.gumroad/bin" >> $GITHUB_PATH
 
       # 3. THE LIVE DEPLOYMENT: Authenticate and upload the created .zip folder
-      - name: Authenticate and Upload Product Asset
+            - name: Authenticate and Upload Product Asset
         env:
           GUMROAD_ACCESS_TOKEN: ${{ secrets.GUMROAD_ACCESS_TOKEN }}
         run: |
           echo "${{ secrets.GUMROAD_ACCESS_TOKEN }}" | $HOME/.gumroad/bin/gumroad auth login --with-token
-          
-          # Replace 'abc123_prod_id' with your actual Gumroad product ID or link name
-          $HOME/.gumroad/bin/gumroad files upload ./product-package.zip --product "abc123_prod_id" --json
+          $HOME/.gumroad/bin/gumroad files upload ./product-package.zip --product "YOUR_ACTUAL_ID_HERE" --json
 
+https://luxecreatorbrand.gumroad.com/l/xfzseb
