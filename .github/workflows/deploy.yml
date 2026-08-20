@@ -17,19 +17,30 @@ jobs:
         with:
           go-version: '1.21'
 
-      - name: Build Application Binary
+      # 1. CROSS-COMPILATION: Build for Linux, Windows, and macOS simultaneously
+      - name: Compile Cross-Platform Binaries
         run: |
-          go build -v -o my-app-executable main.go
+          # Build for Linux
+          GOOS=linux GOARCH=amd64 go build -o dist/gitsummary-linux main.go
+          
+          # Build for Windows (generates an .exe)
+          GOOS=windows GOARCH=amd64 go build -o dist/gitsummary-windows.exe main.go
+          
+          # Build for macOS (Apple Silicon & Intel compatible)
+          GOOS=darwin GOARCH=amd64 go build -o dist/gitsummary-mac-intel main.go
+          GOOS=darwin GOARCH=arm64 go build -o dist/gitsummary-mac-m1main main.go
 
-      - name: Package Asset Into Zip
+      # 2. PACKAGING: Compress all platform executables into a single delivery bundle
+      - name: Package Release Assets
         run: |
-          zip product-package.zip my-app-executable
+          zip -j product-package.zip dist/*
 
       - name: Install Gumroad CLI
         run: |
           curl -fsSL https://gumroad.com | bash
           echo "$HOME/.gumroad/bin" >> $GITHUB_PATH
 
+      # 3. AUTOMATED STORE UPDATE
       - name: Authenticate and Upload Product Asset
         env:
           GUMROAD_ACCESS_TOKEN: ${{ secrets.GUMROAD_ACCESS_TOKEN }}
@@ -37,4 +48,3 @@ jobs:
           echo "${{ secrets.GUMROAD_ACCESS_TOKEN }}" | $HOME/.gumroad/bin/gumroad auth login --with-token
           $HOME/.gumroad/bin/gumroad files upload ./product-package.zip --product "gitsummary" --json
 
-https://gumroad.com
